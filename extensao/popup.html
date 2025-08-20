@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM WhatsApp - Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 380px;
+      min-height: 500px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8f9fa;
+      color: #333;
+    }
+
+    .popup-header {
+      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .popup-header h1 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .popup-header p {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .status-indicator {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #27AE60;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .dashboard-content {
+      padding: 20px;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .metric-card {
+      background: white;
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .metric-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .metric-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #25D366;
+      margin-bottom: 4px;
+    }
+
+    .metric-label {
+      font-size: 12px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .activity-section {
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .activity-list {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .activity-item {
+      padding: 16px;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+    }
+
+    .activity-content {
+      flex: 1;
+    }
+
+    .activity-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .activity-time {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .action-btn {
+      padding: 12px 16px;
+      background: white;
+      border: 1px solid #e1e8ed;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .action-btn:hover {
+      background: #25D366;
+      color: white;
+      border-color: #25D366;
+      transform: translateY(-1px);
+    }
+
+    .settings-section {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .setting-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .setting-item:last-child {
+      border-bottom: none;
+    }
+
+    .setting-label {
+      font-size: 14px;
+      color: #333;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      background: #ccc;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .toggle-switch.active {
+      background: #25D366;
+    }
+
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s;
+    }
+
+    .toggle-switch.active::after {
+      transform: translateX(20px);
+    }
+
+    .footer {
+      padding: 16px 20px;
+      background: white;
+      border-top: 1px solid #e1e8ed;
+      text-align: center;
+    }
+
+    .footer-text {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #25D366;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #666;
+    }
+
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .chart-container {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .chart-placeholder {
+      height: 120px;
+      background: linear-gradient(45deg, #f8f9fa 25%, transparent 25%), 
+                  linear-gradient(-45deg, #f8f9fa 25%, transparent 25%), 
+                  linear-gradient(45deg, transparent 75%, #f8f9fa 75%), 
+                  linear-gradient(-45deg, transparent 75%, #f8f9fa 75%);
+      background-size: 20px 20px;
+      background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="popup-header">
+    <div class="status-indicator" id="status-indicator"></div>
+    <h1>🚀 CRM WhatsApp</h1>
+    <p>Dashboard em Tempo Real</p>
+  </div>
+
+  <div class="dashboard-content">
+    <!-- Métricas Principais -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-icon">💬</div>
+        <div class="metric-value" id="total-messages">0</div>
+        <div class="metric-label">Mensagens Hoje</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">👥</div>
+        <div class="metric-value" id="active-contacts">0</div>
+        <div class="metric-label">Contatos Ativos</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">⚡</div>
+        <div class="metric-value" id="response-time">0s</div>
+        <div class="metric-label">Tempo Resposta</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">📈</div>
+        <div class="metric-value" id="conversion-rate">0%</div>
+        <div class="metric-label">Taxa Conversão</div>
+      </div>
+    </div>
+
+    <!-- Gráfico de Atividade -->
+    <div class="chart-container">
+      <h3 class="section-title">📊 Atividade das Últimas 24h</h3>
+      <div class="chart-placeholder">
+        📈 Gráfico de atividade será exibido aqui
+      </div>
+    </div>
+
+    <!-- Ações Rápidas -->
+    <div class="quick-actions">
+      <button class="action-btn" id="export-data">
+        📊 Exportar Dados
+      </button>
+      <button class="action-btn" id="view-reports">
+        📋 Relatórios
+      </button>
+      <button class="action-btn" id="manage-templates">
+        📝 Templates
+      </button>
+      <button class="action-btn" id="ai-settings">
+        🤖 Config IA
+      </button>
+    </div>
+
+    <!-- Atividade Recente -->
+    <div class="activity-section">
+      <h3 class="section-title">🕒 Atividade Recente</h3>
+      <div class="activity-list" id="activity-list">
+        <div class="empty-state">
+          <div class="empty-state-icon">📭</div>
+          <p>Nenhuma atividade recente</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Configurações -->
+    <div class="settings-section">
+      <h3 class="section-title">⚙️ Configurações</h3>
+      <div class="setting-item">
+        <span class="setting-label">Captura Automática</span>
+        <div class="toggle-switch active" id="auto-capture"></div>
+      </div>
+      <div class="setting-item">
+        <span class="setting-label">Sugestões IA</span>
+        <div class="toggle-switch active" id="ai-suggestions"></div>
+      </div>
+      <div class="setting-item">
+        <span class="setting-label">Notificações</span>
+        <div class="toggle-switch" id="notifications"></div>
+      </div>
+      <div class="setting-item">
+        <span class="setting-label">Modo Escuro</span>
+        <div class="toggle-switch" id="dark-mode"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p class="footer-text">CRM WhatsApp v1.0.0 • Conectado</p>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

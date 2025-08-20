@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "CRM WhatsApp Web",
+  "version": "1.0.0",
+  "description": "Extensão CRM integrada ao WhatsApp Web com IA para gestão de relacionamento com clientes",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "notifications",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "https://web.whatsapp.com/*",
+    "http://localhost:8080/*",
+    "https://api.openai.com/*"
+  ],
+  "content_scripts": [{
+    "matches": ["https://web.whatsapp.com/*"],
+    "js": ["content.js"],
+    "css": ["styles.css"],
+    "run_at": "document_end"
+  }],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "CRM Dashboard",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [{
+    "resources": ["assets/*", "components/*"],
+    "matches": ["https://web.whatsapp.com/*"]
+  }]
+}

@@ -1,0 +1,67 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="128" height="128" rx="20" fill="url(#gradient)"/>
+  
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#25D366;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#128C7E;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="whiteGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f8f9fa;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main WhatsApp Chat Bubble -->
+  <path d="M64 16C41.91 16 24 33.91 24 56c0 12.32 5.6 23.36 14.4 30.72L36.8 104l17.6-4.8c3.84 2.24 8.32 3.6 13.6 3.6 22.09 0 40-17.91 40-40S86.09 16 64 16z" fill="url(#whiteGradient)"/>
+  
+  <!-- CRM Dashboard Panel -->
+  <rect x="44" y="36" width="40" height="28" rx="4" fill="none" stroke="#25D366" stroke-width="3"/>
+  
+  <!-- Dashboard Header -->
+  <rect x="48" y="40" width="32" height="4" rx="2" fill="#25D366"/>
+  
+  <!-- Dashboard Content Lines -->
+  <line x1="48" y1="48" x2="76" y2="48" stroke="#25D366" stroke-width="2" stroke-linecap="round"/>
+  <line x1="48" y1="52" x2="68" y2="52" stroke="#25D366" stroke-width="2" stroke-linecap="round"/>
+  <line x1="48" y1="56" x2="72" y2="56" stroke="#25D366" stroke-width="2" stroke-linecap="round"/>
+  <line x1="48" y1="60" x2="64" y2="60" stroke="#25D366" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Chat Indicators -->
+  <circle cx="44" cy="48" r="3" fill="#25D366"/>
+  <circle cx="52" cy="48" r="3" fill="#25D366"/>
+  <circle cx="60" cy="48" r="3" fill="#25D366"/>
+  
+  <!-- AI Sparkles -->
+  <g fill="#FFD700">
+    <path d="M88 28l3 6 6 3-6 3-3 6-3-6-6-3 6-3 3-6z"/>
+    <path d="M96 40l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4z"/>
+    <path d="M92 52l1.5 3 3 1.5-3 1.5-1.5 3-1.5-3-3-1.5 3-1.5 1.5-3z"/>
+  </g>
+  
+  <!-- Analytics Chart -->
+  <g stroke="#25D366" stroke-width="2" fill="none">
+    <path d="M48 76 L52 72 L56 74 L60 68 L64 70 L68 64 L72 66 L76 60" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  
+  <!-- Chart Points -->
+  <g fill="#25D366">
+    <circle cx="48" cy="76" r="2"/>
+    <circle cx="52" cy="72" r="2"/>
+    <circle cx="56" cy="74" r="2"/>
+    <circle cx="60" cy="68" r="2"/>
+    <circle cx="64" cy="70" r="2"/>
+    <circle cx="68" cy="64" r="2"/>
+    <circle cx="72" cy="66" r="2"/>
+    <circle cx="76" cy="60" r="2"/>
+  </g>
+  
+  <!-- Message Notification -->
+  <circle cx="88" cy="72" r="8" fill="#FF4444"/>
+  <text x="88" y="76" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="10" font-weight="bold">3</text>
+  
+  <!-- CRM Label -->
+  <text x="64" y="96" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="bold">CRM</text>
+</svg>

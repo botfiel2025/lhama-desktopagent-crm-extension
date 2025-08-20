@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurações de IA - CRM WhatsApp</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      opacity: 0.9;
+      font-size: 16px;
+    }
+
+    .content {
+      padding: 30px;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: #25D366;
+      border-radius: 2px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 500;
+      color: #34495e;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .form-input, .form-textarea, .form-select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e1e8ed;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      outline: none;
+      border-color: #25D366;
+      box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-help {
+      font-size: 12px;
+      color: #7f8c8d;
+      margin-top: 4px;
+    }
+
+    .toggle-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .toggle-info {
+      flex: 1;
+    }
+
+    .toggle-title {
+      font-weight: 500;
+      color: #2c3e50;
+      margin-bottom: 4px;
+    }
+
+    .toggle-description {
+      font-size: 13px;
+      color: #7f8c8d;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 50px;
+      height: 26px;
+      background: #ddd;
+      border-radius: 13px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .toggle-switch.active {
+      background: #25D366;
+    }
+
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 22px;
+      height: 22px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle-switch.active::after {
+      transform: translateX(24px);
+    }
+
+    .prompt-card {
+      background: #f8f9fa;
+      border: 2px solid #e1e8ed;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .prompt-card:hover {
+      border-color: #25D366;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.1);
+    }
+
+    .prompt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .prompt-name {
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 16px;
+    }
+
+    .prompt-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: #25D366;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #128C7E;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #ecf0f1;
+      color: #2c3e50;
+    }
+
+    .btn-secondary:hover {
+      background: #d5dbdb;
+    }
+
+    .btn-danger {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #c0392b;
+    }
+
+    .btn-small {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      padding: 30px;
+      background: #f8f9fa;
+      border-top: 1px solid #e1e8ed;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      padding: 24px 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #7f8c8d;
+      padding: 4px;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .modal-footer {
+      padding: 0 24px 24px;
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .status-active {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status-inactive {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .api-status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .api-status-icon {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #e74c3c;
+    }
+
+    .api-status.connected .api-status-icon {
+      background: #27ae60;
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 16px 24px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      z-index: 10000;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .notification.success {
+      background: #27ae60;
+    }
+
+    .notification.error {
+      background: #e74c3c;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin: 10px;
+        border-radius: 12px;
+      }
+
+      .header {
+        padding: 20px;
+      }
+
+      .content {
+        padding: 20px;
+      }
+
+      .actions {
+        flex-direction: column;
+        padding: 20px;
+      }
+
+      .modal-content {
+        width: 95%;
+        margin: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🤖 Configurações de IA</h1>
+      <p>Configure os prompts e comportamentos da inteligência artificial</p>
+    </div>
+
+    <div class="content">
+      <!-- Status da API -->
+      <div class="section">
+        <div class="section-title">Status da Conexão</div>
+        <div class="api-status" id="api-status">
+          <div class="api-status-icon"></div>
+          <div>
+            <div><strong>OpenAI API</strong></div>
+            <div style="font-size: 13px; color: #7f8c8d;">Verificando conexão...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Configurações Gerais -->
+      <div class="section">
+        <div class="section-title">Configurações Gerais</div>
+        
+        <div class="toggle-group">
+          <div class="toggle-info">
+            <div class="toggle-title">Sugestões Automáticas</div>
+            <div class="toggle-description">Ativar sugestões de resposta baseadas em IA</div>
+          </div>
+          <div class="toggle-switch" id="auto-suggestions" onclick="toggleSwitch(this)"></div>
+        </div>
+
+        <div class="toggle-group">
+          <div class="toggle-info">
+            <div class="toggle-title">Análise de Sentimento</div>
+            <div class="toggle-description">Analisar o tom das mensagens recebidas</div>
+          </div>
+          <div class="toggle-switch active" id="sentiment-analysis" onclick="toggleSwitch(this)"></div>
+        </div>
+
+        <div class="toggle-group">
+          <div class="toggle-info">
+            <div class="toggle-title">Detecção de Intenção</div>
+            <div class="toggle-description">Identificar a intenção do cliente automaticamente</div>
+          </div>
+          <div class="toggle-switch active" id="intent-detection" onclick="toggleSwitch(this)"></div>
+        </div>
+
+        <div class="toggle-group">
+          <div class="toggle-info">
+            <div class="toggle-title">Sugestões de Follow-up</div>
+            <div class="toggle-description">Sugerir mensagens de acompanhamento</div>
+          </div>
+          <div class="toggle-switch" id="followup-suggestions" onclick="toggleSwitch(this)"></div>
+        </div>
+      </div>
+
+      <!-- Configurações do Modelo -->
+      <div class="section">
+        <div class="section-title">Configurações do Modelo</div>
+        
+        <div class="form-group">
+          <label class="form-label">Modelo de IA</label>
+          <select class="form-select" id="ai-model">
+            <option value="gpt-3.5-turbo">GPT-3.5 Turbo (Rápido)</option>
+            <option value="gpt-4" selected>GPT-4 (Mais Preciso)</option>
+            <option value="gpt-4-turbo">GPT-4 Turbo (Balanceado)</option>
+          </select>
+          <div class="form-help">Escolha o modelo de IA para gerar as respostas</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Temperatura (Criatividade)</label>
+          <input type="range" class="form-input" id="temperature" min="0" max="1" step="0.1" value="0.7">
+          <div class="form-help">0 = Mais conservador, 1 = Mais criativo (Atual: <span id="temperature-value">0.7</span>)</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Máximo de Tokens</label>
+          <input type="number" class="form-input" id="max-tokens" value="150" min="50" max="500">
+          <div class="form-help">Limite de palavras para as respostas geradas</div>
+        </div>
+      </div>
+
+      <!-- Prompts Personalizados -->
+      <div class="section">
+        <div class="section-title">Prompts Personalizados</div>
+        
+        <div id="prompts-container">
+          <!-- Prompts serão carregados aqui -->
+        </div>
+        
+        <button class="btn btn-secondary" onclick="openPromptModal()">➕ Adicionar Novo Prompt</button>
+      </div>
+
+      <!-- Contexto do Negócio -->
+      <div class="section">
+        <div class="section-title">Contexto do Negócio</div>
+        
+        <div class="form-group">
+          <label class="form-label">Nome da Empresa</label>
+          <input type="text" class="form-input" id="company-name" placeholder="Ex: Minha Empresa Ltda">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Setor de Atuação</label>
+          <input type="text" class="form-input" id="business-sector" placeholder="Ex: E-commerce, Consultoria, Serviços">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Descrição do Negócio</label>
+          <textarea class="form-textarea" id="business-description" placeholder="Descreva brevemente seu negócio, produtos ou serviços..."></textarea>
+          <div class="form-help">Esta informação ajuda a IA a gerar respostas mais contextualizadas</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Tom de Comunicação</label>
+          <select class="form-select" id="communication-tone">
+            <option value="formal">Formal</option>
+            <option value="casual" selected>Casual</option>
+            <option value="friendly">Amigável</option>
+            <option value="professional">Profissional</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-secondary" onclick="resetToDefaults()">🔄 Restaurar Padrões</button>
+      <button class="btn btn-secondary" onclick="testAI()">🧪 Testar IA</button>
+      <button class="btn btn-primary" onclick="saveSettings()">💾 Salvar Configurações</button>
+    </div>
+  </div>
+
+  <!-- Modal para Prompt -->
+  <div class="modal" id="prompt-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Novo Prompt</h3>
+        <button class="modal-close" onclick="closePromptModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Nome do Prompt</label>
+          <input type="text" class="form-input" id="prompt-name" placeholder="Ex: Resposta de Suporte">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Categoria</label>
+          <select class="form-select" id="prompt-category">
+            <option value="general">Geral</option>
+            <option value="support">Suporte</option>
+            <option value="sales">Vendas</option>
+            <option value="followup">Follow-up</option>
+            <option value="greeting">Saudação</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Prompt</label>
+          <textarea class="form-textarea" id="prompt-text" placeholder="Digite o prompt aqui..." style="min-height: 150px;"></textarea>
+          <div class="form-help">Use {message} para referenciar a mensagem do cliente e {context} para o contexto da conversa</div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Palavras-chave (separadas por vírgula)</label>
+          <input type="text" class="form-input" id="prompt-keywords" placeholder="Ex: problema, erro, ajuda">
+          <div class="form-help">O prompt será ativado quando estas palavras forem detectadas</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closePromptModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="savePrompt()">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="ai-config.js"></script>
+</body>
+</html>
