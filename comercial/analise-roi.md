@@ -348,8 +348,8 @@ quadrantChart
     
     quadrant-1 Excelente
     quadrant-2 Muito Bom
-    quadrant-3 Aceitável
-    quadrant-4 Ótimo
+    quadrant-3 Aceitavel
+    quadrant-4 Otimo
     
     "Conservador": [0.3, 0.3]
     "Realista": [0.6, 0.6]
